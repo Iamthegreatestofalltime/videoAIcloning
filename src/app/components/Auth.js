@@ -24,16 +24,25 @@ const Auth = () => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ action, ...body }),
       });
-
+    
       const data = await response.json();
-
+      console.log("Response data:", data);
+    
       if (response.ok) {
-        localStorage.setItem('token', data.token);
+        const userData = {
+          accessToken: data.accessToken,
+          refreshToken: data.refreshToken,
+          userId: data.userId,
+          username: data.username
+        };
+        localStorage.setItem('userData', JSON.stringify(userData));
+        console.log("Stored user data in localStorage:", userData);
         router.push('/'); // Redirect to dashboard after successful auth
       } else {
         setError(data.error);
       }
     } catch (error) {
+      console.error("Error during authentication:", error);
       setError('An error occurred. Please try again.');
     }
   };

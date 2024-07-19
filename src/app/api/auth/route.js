@@ -59,7 +59,8 @@ export async function POST(request) {
         REFRESH_SECRET,
         { expiresIn: '7d' } // 7 days
       );
-  
+
+      console.log("sending correct data");
       // Send tokens to client
       return NextResponse.json({ 
         accessToken, 
